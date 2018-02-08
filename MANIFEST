@@ -1,5 +1,7 @@
 lib/DT.pm
 Makefile.PL
 MANIFEST			This list of files
+README
 t/01-constructor.t
 t/02-formatters.t
+t/pod.t

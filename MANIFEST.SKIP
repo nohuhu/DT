@@ -6,4 +6,4 @@ pm_to_blib.*
 \.git.*
 .*\.swp$
 ^MANIFEST\.SKIP$
-^README\.bak$
+.*?\.bak$
