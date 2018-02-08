@@ -36,7 +36,7 @@ WriteMakefile(
     VERSION_FROM => 'lib/DT.pm',
     ABSTRACT     => 'DWIM wrapper for DateTime',
     AUTHOR       => 'Alex Tokarev',
-    
+    LICENSE      => 'perl',
     PREREQ_PM     => \%MAIN_REQ,
 
     META_MERGE => {
@@ -46,4 +46,3 @@ WriteMakefile(
         },
     },
 );
-
