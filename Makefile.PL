@@ -38,5 +38,12 @@ WriteMakefile(
     AUTHOR       => 'Alex Tokarev',
     
     PREREQ_PM     => \%MAIN_REQ,
+
+    META_MERGE => {
+        resources => {
+            bugtracker => 'https://github.com/nohuhu/DT/issues',
+            repository => 'https://github.com/nohuhu/DT',
+        },
+    },
 );
 
