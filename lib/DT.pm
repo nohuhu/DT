@@ -8,10 +8,11 @@ no warnings 'uninitialized';
 
 use Carp qw();
 use Scalar::Util qw(looks_like_number);
+use Sub::Install;
 
 use parent 'DateTime::Moonpig';
 
-our $VERSION = '0.1.0';
+our $VERSION = '0.2.0';
 
 my ($HAVE_PG, $HAVE_ISO);
 
@@ -81,6 +82,31 @@ sub pg_timestamp_tz {
     return DateTime::Format::Pg->format_timestamptz($dt);
 }
 
+{
+    for my $method (qw(
+        add_duration subtract_duration
+        truncate
+        set set_time_zone set_year set_month set_day
+        set_hour set_minute set_second set_nanosecond
+    )) {
+        Sub::Install::install_sub({
+            code => sub {
+                my $dt = shift;
+                
+                my $copy = $dt->clone;
+                bless $copy, 'DateTime';
+                
+                $copy->$method(@_);
+                
+                bless $copy, ref $dt;
+                
+                return $copy;
+            },
+            as => $method,
+        });
+    }
+}
+
 1;
 
 __END__
@@ -121,11 +147,9 @@ in turn is a wrapper over DateTime. DateTime::Moonpig brings immutability
 and saner operator overloading at the cost of cartoonish name but also
 lacks date/time parsing capabilities that are badly needed all the time.
 
-There is a myriad of helpful modules on CPAN but all that typing!
+There is a myriad of helpful modules on CPAN but oh all that typing!
 
-=for readme stop
-
-Compare:
+Consider:
 
     use DateTime;
     my $dt = DateTime->from_epoch(epoch => time);
@@ -136,7 +160,7 @@ Compare:
     use DateTime::Format::ISO8601;
     my $dt = DateTime::Format::ISO8601->parse_datetime($iso_datetime);
 
-With:
+Versus:
 
     use DT ':pg';
     my $dt_unix = DT->new(time);
@@ -146,7 +170,35 @@ With:
 DT constructor will try to Do What You Mean, and if it cannot it will
 fall back to default DateTime constructor. Simple.
 
+=for readme stop
+
+=head1 IMMUTABILITY AND DATE MATH
+
+One thing that L<DateTime::Moonpig> authors get right is data immutability:
+any operations on a L<DateTime> object should not mutate original object
+as this leads to a multitude of potential prioblems.
+
+However the solution presented in L<DateTime::Moonpig> is to throw an exception
+when a mutator method is called, which is far from Doing What I Mean. Even more,
+with C<add_duration> and C<subtract_duration> methods rendered effectively unusable
+the only way to handle date arithmetic suggested is by adding or subtracting
+the number of seconds from the date which semantically is not the same as adding
+or subtracting days/months/etc.
+
+A more reasonable approach is to clone the date object, perform the mutation
+on the copy and return the new object.
+
 =head1 METHODS
+
+The following mutator methods are overridden to return a new C<DT> object
+instead of performing operations on the original object:
+
+C<add>, C<add_duration>, C<subtract>, C<subtract_duration>, C<truncate>,
+C<set>, C<set_time_zone>, C<set_year>, C<set_month>, C<set_day>,
+C<set_hour>, C<set_minute>, C<set_second>, C<set_nanosecond>
+
+Note that C<set_locale> and C<set_formatter> are not overridden. These methods
+do not affect the actual date/time value so are safe to use.
 
 DT also adds a few useful methods:
 
@@ -210,4 +262,3 @@ the same terms as Perl itself. See L<"perlartistic">.
 =for readme stop
 
 =cut
-

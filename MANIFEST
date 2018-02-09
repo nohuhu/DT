@@ -4,4 +4,6 @@ MANIFEST			This list of files
 README
 t/01-constructor.t
 t/02-formatters.t
+t/03-pg.t
+t/04-mutators.t
 t/pod.t

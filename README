@@ -7,7 +7,28 @@ DT
     lacks date/time parsing capabilities that are badly needed all the
     time.
 
-    There is a myriad of helpful modules on CPAN but all that typing!
+    There is a myriad of helpful modules on CPAN but oh all that typing!
+
+    Consider:
+
+        use DateTime;
+        my $dt = DateTime->from_epoch(epoch => time);
+    
+        use DateTime::Format::Pg;
+        my $dt = DateTime::Format::Pg->parse_datetime($timestamp_from_postgres);
+    
+        use DateTime::Format::ISO8601;
+        my $dt = DateTime::Format::ISO8601->parse_datetime($iso_datetime);
+
+    Versus:
+
+        use DT ':pg';
+        my $dt_unix = DT->new(time);
+        my $dt_pg = DT->new($timestamp_from_postgres);
+        my $dt_iso = DT->new($iso_datetime);
+
+    DT constructor will try to Do What You Mean, and if it cannot it will
+    fall back to default DateTime constructor. Simple.
 
 INSTALLATION
 
