@@ -42,7 +42,11 @@ WriteMakefile(
     META_MERGE => {
         resources => {
             bugtracker => 'https://github.com/nohuhu/DT/issues',
-            repository => 'https://github.com/nohuhu/DT',
+            repository => {
+                url => 'git://git@github.com:nohuhu/DT.git',
+                web => 'https://github.com/nohuhu/DT',
+                type => 'git',
+            },
         },
     },
 );
