@@ -1,7 +1,5 @@
 package DT;
 
-use DateTime::Format::Pg;
-
 use strict;
 use warnings 'FATAL';
 no warnings 'uninitialized';
@@ -12,7 +10,7 @@ use Sub::Install;
 
 use parent 'DateTime::Moonpig';
 
-our $VERSION = '0.2.1';
+our $VERSION = '0.2.2';
 
 my ($HAVE_PG, $HAVE_ISO);
 
