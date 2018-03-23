@@ -1,0 +1,16 @@
+0.3.0   Thu Mar 22 21:49:50 2018 -0700
+    - Comparison operators are overloaded to DWIM
+
+0.2.3   Sat Feb 10 16:13:09 2018 -0800
+    - Some more failing test fixes (GitHub issue #3)
+
+0.2.2   Fri Feb 9 22:45:36 2018 -0800
+    - Fix tests depending on DateTime::Format::Pg (GitHub issue #2)
+
+0.2.0   Thu Feb 8 22:33:19 2018 -0800
+    - Added missing LICENSE meta as reported by CPANTS.
+        Thanks to Mohammad S Anwar for the fix.
+    - Added mutator method overrides; a bit of cleanup and more tests
+
+0.1.0   Wed Feb 7 23:11:52 2018 -0800
+    - Initial version

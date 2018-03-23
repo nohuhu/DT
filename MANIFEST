@@ -6,4 +6,5 @@ t/01-constructor.t
 t/02-formatters.t
 t/03-pg.t
 t/04-mutators.t
+t/05-overload.t
 t/pod.t
