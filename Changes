@@ -1,3 +1,8 @@
+0.4.0   Tue May 29 23:16:21 2018 -0700
+    - Deprecated :pg import tag; DateTime::Format::Pg is now detected
+      in constructor
+    - Deprecated :no_iso tag; DateTime::Format::ISO8601 is now mandatory
+
 0.3.0   Thu Mar 22 21:49:50 2018 -0700
     - Comparison operators are overloaded to DWIM
 
