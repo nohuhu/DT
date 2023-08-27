@@ -10,7 +10,10 @@ if ( $@ ) {
 
 plan tests => 7;
 
-eval { DT->import(':pg') };
+eval {
+    local $SIG{__WARN__} = sub {};
+    DT->import(':pg');
+};
 is $@, '', "import :pg no exception";
 
 my $dt = eval { DT->new('2018-02-07 21:22:09.58343-08') };
