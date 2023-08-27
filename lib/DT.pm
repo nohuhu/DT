@@ -33,6 +33,18 @@ use overload
 
 my $HAVE_PG;
 
+sub import {
+    shift;
+    for my $arg (@ARGV) {
+        if ($arg =~ /^:/) {
+            Carp::carp "Import tags ($arg) are deprecated!";
+        }
+        else {
+            Carp::croak "Unknown option $arg!";
+        }
+    }
+}
+
 sub new {
     my $class = shift;
 
@@ -245,8 +257,6 @@ Consider:
 
 Versus:
 
-    use DT ':pg';
-    
     my $dt_unix = DT->new(time);
     my $dt_pg = DT->new($timestamp_from_postgres);
     my $dt_iso = DT->new($iso_datetime);
